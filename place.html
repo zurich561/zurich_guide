@@ -1,0 +1,188 @@
+<!-- /place.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Ort – Zürich Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Details zu einem Ort in Zürich: Öffnungszeiten, Bewertungen, Karte, In der Nähe." />
+  <link rel="canonical" href="./place.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/libs/leaflet/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./city.html?city=zurich">Zürich</a>
+      <a href="./category.html?c=food">Essen & Trinken</a>
+      <a href="./category.html?c=attractions">Sehenswürdigkeiten</a>
+      <a href="./category.html?c=parks">Parks</a>
+      <a href="./favorites.html">Favoriten</a>
+    </nav>
+    <form id="global-search" class="global-search" role="search">
+      <input id="q" name="q" type="search" placeholder="Suche…" />
+      <button type="submit">Suchen</button>
+      <div id="search-suggest" class="suggest"></div>
+    </form>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Brotkrumen">
+    <a href="./index.html">Start</a> &rsaquo;
+    <a href="./city.html?city=zurich">Zürich</a> &rsaquo;
+    <a id="bc-cat" href="#">Kategorie</a> &rsaquo;
+    <span id="bc-place">Ort</span>
+  </nav>
+
+  <main class="container">
+    <article id="place"></article>
+    <section class="split">
+      <div class="split-left">
+        <h2>Bewertungen</h2>
+        <div id="rating-bar"></div>
+        <div id="reviews"></div>
+        <a class="btn" id="write-review" href="#">Bewertung schreiben</a>
+      </div>
+      <div class="split-right">
+        <h2>Karte</h2>
+        <div id="map" class="map"></div>
+        <h2>In der Nähe</h2>
+        <div id="nearby" class="list-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide.</p>
+  </footer>
+
+  <script type="module">
+    import { boot, initGlobalSearch, el, starHTML, metersBetween, formatDistance, ratingHistogram, openStatusToday, jsonLDForPlace } from './assets/js/main.js';
+    import { initMap, addPlacesToMap, focusPlace } from './assets/js/map.js';
+
+    boot().then(({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      initGlobalSearch();
+
+      const params = new URLSearchParams(location.search);
+      const slug = params.get('slug');
+      const place = data.places.find(p => p.slug === slug);
+      if (!place) { location.href = './index.html'; return; }
+
+      // breadcrumbs
+      const cat = data.categories.find(c=>c.id===place.categoryId);
+      document.getElementById('bc-cat').textContent = cat?.name || 'Kategorie';
+      document.getElementById('bc-cat').href = `./category.html?c=${cat?.slug || ''}`;
+      document.getElementById('bc-place').textContent = place.name;
+
+      // gallery + core info
+      const $wrap = document.getElementById('place');
+      const gallery = el('div',{class:'gallery'},
+        ...place.images.map(src => el('img',{src, alt: place.name, loading:'lazy', width:640, height:400}))
+      );
+      const todayOpen = openStatusToday(place);
+      $wrap.append(
+        gallery,
+        el('h1',{}, place.name),
+        el('div',{class:'meta'}, `${starHTML(place.avgRating)} (${place.ratingCount}) · ${place.priceLevel} · ${todayOpen ? 'Heute geöffnet' : 'Heute geschlossen'}`),
+        el('p',{}, place.description),
+        el('ul',{class:'facts'},
+          el('li',{}, `Adresse: ${place.address}`),
+          el('li',{}, `Website: `, el('a',{href:place.website,target:'_blank',rel:'noopener'}, place.website)),
+          el('li',{}, `Telefon: ${place.phone||'-'}`),
+          el('li',{}, `Stadtteil: ${place.neighborhood}`),
+          el('li',{}, `Tags: ${place.tags.join(', ')}`)
+        ),
+        el('div',{class:'actions'},
+          el('a',{class:'btn', href:`./review.html?place=${place.id}`},'Bewertung schreiben'),
+          el('button',{class:'btn btn-like','data-id':place.id,'aria-pressed': (localStorage.getItem('favorites')||'').includes(String(place.id))?'true':'false'},'Merken'),
+          el('button',{class:'btn btn-secondary',id:'share'},'Link kopieren')
+        )
+      );
+
+      // rating histogram
+      const hist = ratingHistogram(place._allReviews||[]);
+      const $bar = document.getElementById('rating-bar');
+      $bar.innerHTML = '';
+      for (let s=5;s>=1;s--){
+        const total = (place._allReviews||[]).length || 1;
+        const count = hist[s]||0;
+        const pct = Math.round(count/total*100);
+        const row = el('div',{class:'hist-row'},
+          el('span',{class:'hist-star'}, `${s}`),
+          el('div',{class:'hist-bar'}, el('div',{class:'hist-fill', style:`width:${pct}%`})),
+          el('span',{class:'hist-count'}, `${count}`)
+        );
+        $bar.append(row);
+      }
+
+      // reviews
+      const $reviews = document.getElementById('reviews');
+      const r = [...(place._allReviews||[])].sort((a,b)=> (b.date||'').localeCompare(a.date||''));
+      if (!r.length) $reviews.append(el('p',{},'Noch keine Bewertungen.'));
+      r.forEach(rv=>{
+        $reviews.append(
+          el('article',{class:'review'},
+            el('div',{class:'review-head'},
+              el('strong',{}, rv.title),
+              el('span',{}, ` – ${rv.author} · ${rv.date}`),
+              el('span',{class:'stars-inline'}, ' ', '★'.repeat(rv.rating))
+            ),
+            el('p',{}, rv.text)
+          )
+        );
+      });
+
+      // map
+      const map = initMap('map', place.coords);
+      addPlacesToMap(map, [place], { linkTo: 'place' });
+      focusPlace(map, place);
+
+      // nearby (by haversine)
+      const dists = data.places
+        .filter(p => p.id !== place.id && p.cityId === place.cityId)
+        .map(p => ({p, d: metersBetween(place.coords, p.coords)}))
+        .sort((a,b)=> a.d-b.d)
+        .slice(0,5);
+      const $near = document.getElementById('nearby');
+      dists.forEach(({p,d})=>{
+        $near.append(
+          el('article',{class:'list-card small'},
+            el('img',{src:p.images[0],alt:p.name,loading:'lazy',width:220,height:150}),
+            el('div',{class:'list-card-body'},
+              el('h3',{}, el('a',{href:`./place.html?slug=${p.slug}`}, p.name)),
+              el('div',{class:'meta'}, `${starHTML(p.avgRating)} (${p.ratingCount}) · ${formatDistance(d)}`)
+            )
+          )
+        );
+      });
+
+      // favorites toggle
+      document.querySelector('.btn-like').addEventListener('click', (e)=>{
+        const id = Number(e.currentTarget.getAttribute('data-id'));
+        const favs = new Set(JSON.parse(localStorage.getItem('favorites')||'[]'));
+        if (favs.has(id)) favs.delete(id); else favs.add(id);
+        localStorage.setItem('favorites', JSON.stringify([...favs]));
+        e.currentTarget.setAttribute('aria-pressed', favs.has(id)?'true':'false');
+      });
+
+      // share
+      document.getElementById('share').addEventListener('click', async ()=>{
+        const url = location.href;
+        try {
+          await navigator.clipboard.writeText(url);
+          alert('Link kopiert.');
+        } catch { prompt('Kopiere den Link:', url); }
+      });
+
+      // JSON-LD
+      const ld = jsonLDForPlace(place);
+      const s = document.createElement('script');
+      s.type='application/ld+json';
+      s.textContent = JSON.stringify(ld, null, 2);
+      document.head.appendChild(s);
+    });
+  </script>
+  <script src="./assets/libs/leaflet/leaflet.js"></script>
+</body>
+</html>

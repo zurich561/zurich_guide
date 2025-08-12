@@ -1,0 +1,6 @@
+
+[
+  { "id": 1, "name": "Essen & Trinken", "slug": "food", "icon": "🍽️" },
+  { "id": 2, "name": "Sehenswürdigkeiten", "slug": "attractions", "icon": "🏛️" },
+  { "id": 3, "name": "Parks & Natur", "slug": "parks", "icon": "🌳" }
+]

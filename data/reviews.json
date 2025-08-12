@@ -1,0 +1,38 @@
+
+[
+  { "id": 1, "placeId": 101, "rating": 5, "title": "Lecker & urig", "text": "Tolles Ambiente, super Rösti.", "date": "2025-05-10", "author": "Lena", "likes": 12 },
+  { "id": 2, "placeId": 101, "rating": 4, "title": "Klassiker", "text": "Gute Schweizer Küche, manchmal voll.", "date": "2025-04-02", "author": "Marco", "likes": 3 },
+  { "id": 3, "placeId": 102, "rating": 5, "title": "Veggie-Himmel", "text": "Große Auswahl, sehr frisch.", "date": "2025-03-18", "author": "Sophie", "likes": 8 },
+  { "id": 4, "placeId": 102, "rating": 4, "title": "Top Buffet", "text": "Preis ok, Qualität top.", "date": "2025-03-30", "author": "Ben", "likes": 2 },
+  { "id": 5, "placeId": 103, "rating": 4, "title": "Chilliger Spot", "text": "Perfekt im Sommer.", "date": "2025-06-12", "author": "Noah", "likes": 4 },
+  { "id": 6, "placeId": 103, "rating": 3, "title": "Schön, aber voll", "text": "Am Wochenende sehr busy.", "date": "2025-07-01", "author": "Mara", "likes": 1 },
+
+  { "id": 7, "placeId": 201, "rating": 5, "title": "Must-see", "text": "Tolle Aussicht vom Turm.", "date": "2025-02-14", "author": "Tim", "likes": 9 },
+  { "id": 8, "placeId": 201, "rating": 4, "title": "Beeindruckend", "text": "Schöne Kirche.", "date": "2025-01-20", "author": "Eva", "likes": 1 },
+  { "id": 9, "placeId": 202, "rating": 4, "title": "Shopping pur", "text": "Teuer, aber schön.", "date": "2025-04-20", "author": "Mila", "likes": 2 },
+  { "id": 10, "placeId": 202, "rating": 3, "title": "Okay", "text": "Viele Leute.", "date": "2025-03-11", "author": "Jonas", "likes": 0 },
+  { "id": 11, "placeId": 203, "rating": 5, "title": "Panorama", "text": "Sonnenuntergang mega.", "date": "2025-06-22", "author": "Lea", "likes": 11 },
+  { "id": 12, "placeId": 203, "rating": 5, "title": "Wandern", "text": "Viele Wege, top.", "date": "2025-05-03", "author": "Kian", "likes": 3 },
+
+  { "id": 13, "placeId": 301, "rating": 5, "title": "Am See", "text": "Entspannt, viel Platz.", "date": "2025-06-15", "author": "Sara", "likes": 7 },
+  { "id": 14, "placeId": 301, "rating": 4, "title": "Schön", "text": "Für Familien ideal.", "date": "2025-04-28", "author": "Aron", "likes": 1 },
+  { "id": 15, "placeId": 302, "rating": 4, "title": "Ruhig", "text": "Schöner Garten.", "date": "2025-05-12", "author": "Amy", "likes": 1 },
+  { "id": 16, "placeId": 302, "rating": 3, "title": "Klein", "text": "Kurz, aber fein.", "date": "2025-03-05", "author": "Paul", "likes": 0 },
+  { "id": 17, "placeId": 303, "rating": 4, "title": "Grün am HB", "text": "Praktisch gelegen.", "date": "2025-02-22", "author": "Nico", "likes": 2 },
+  { "id": 18, "placeId": 303, "rating": 4, "title": "Schöner Park", "text": "Ruhige Ecke.", "date": "2025-04-10", "author": "Kaya", "likes": 0 },
+
+  { "id": 19, "placeId": 104, "rating": 5, "title": "Beste Wurst", "text": "Bürli + Senf = Liebe.", "date": "2025-07-23", "author": "Sam", "likes": 6 },
+  { "id": 20, "placeId": 104, "rating": 4, "title": "Schnell & gut", "text": "Immer eine Schlange.", "date": "2025-05-19", "author": "Ida", "likes": 1 },
+  { "id": 21, "placeId": 204, "rating": 5, "title": "Spannend", "text": "Tolle Ausstellungen.", "date": "2025-06-02", "author": "Oli", "likes": 4 },
+  { "id": 22, "placeId": 204, "rating": 4, "title": "Groß & informativ", "text": "Architektur schön.", "date": "2025-03-17", "author": "Mia", "likes": 1 },
+
+  { "id": 23, "placeId": 105, "rating": 4, "title": "Elegantes Dinner", "text": "Service top.", "date": "2025-02-12", "author": "Jan", "likes": 2 },
+  { "id": 24, "placeId": 105, "rating": 3, "title": "Teuer", "text": "Qualität gut, teuer.", "date": "2025-04-01", "author": "Liv", "likes": 0 },
+  { "id": 25, "placeId": 304, "rating": 4, "title": "Grün & ruhig", "text": "Perfekt zum Joggen.", "date": "2025-05-06", "author": "Ava", "likes": 1 },
+  { "id": 26, "placeId": 304, "rating": 4, "title": "Schöner Wald", "text": "Gute Wege.", "date": "2025-03-11", "author": "Finn", "likes": 0 },
+
+  { "id": 27, "placeId": 201, "rating": 5, "title": "Geschichte pur", "text": "Beeindruckend innen.", "date": "2025-07-09", "author": "Tom", "likes": 5 },
+  { "id": 28, "placeId": 202, "rating": 3, "title": "Viel los", "text": "Am Wochenende sehr voll.", "date": "2025-06-29", "author": "Zoe", "likes": 0 },
+  { "id": 29, "placeId": 203, "rating": 5, "title": "Top Tour", "text": "Mit der Bahn hoch.", "date": "2025-07-03", "author": "Kim", "likes": 3 },
+  { "id": 30, "placeId": 101, "rating": 4, "title": "Authentisch", "text": "Gute Portionen.", "date": "2025-06-01", "author": "Leo", "likes": 1 }
+]

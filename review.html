@@ -1,0 +1,101 @@
+<!-- /review.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Bewertung schreiben – Zürich Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Eigene Bewertung schreiben und lokal speichern. Wird mit bestehenden Bewertungen zusammengeführt." />
+  <link rel="canonical" href="./review.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./favorites.html">Favoriten</a>
+    </nav>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Brotkrumen">
+    <a href="./index.html">Start</a> &rsaquo; <span>Bewertung</span>
+  </nav>
+
+  <main class="container">
+    <h1>Bewertung schreiben</h1>
+    <form id="review-form" class="review-form" novalidate>
+      <input type="hidden" id="placeId" name="placeId" />
+      <label>
+        Ort
+        <select id="placeSelect" name="placeSelect" required aria-label="Ort"></select>
+      </label>
+      <label>
+        Titel
+        <input type="text" id="title" name="title" maxlength="80" required />
+      </label>
+      <label>
+        Text
+        <textarea id="text" name="text" rows="6" maxlength="1200" required></textarea>
+      </label>
+      <label>
+        Bewertung
+        <select id="rating" name="rating" required>
+          <option value="">–</option>
+          <option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
+        </select>
+      </label>
+      <label>
+        Dein Name
+        <input type="text" id="author" name="author" maxlength="40" required />
+      </label>
+      <button type="submit" class="btn">Speichern</button>
+      <a href="./index.html" class="btn btn-secondary">Abbrechen</a>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide.</p>
+  </footer>
+
+  <script type="module">
+    import { boot } from './assets/js/main.js';
+    boot().then(({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      const params = new URLSearchParams(location.search);
+      const pid = Number(params.get('place') || 0);
+
+      const $sel = document.getElementById('placeSelect');
+      data.places.forEach(p=>{
+        const o = document.createElement('option');
+        o.value = String(p.id); o.textContent = p.name;
+        $sel.append(o);
+      });
+      if (pid) $sel.value = String(pid);
+
+      document.getElementById('review-form').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const form = e.currentTarget;
+        if (!form.reportValidity()) return;
+
+        const placeId = Number($sel.value);
+        const rv = {
+          id: Date.now(),
+          placeId,
+          rating: Number(form.rating.value),
+          title: form.title.value.trim(),
+          text: form.text.value.trim(),
+          date: new Date().toISOString().slice(0,10),
+          author: form.author.value.trim(),
+          likes: 0
+        };
+        const key = 'reviews_local';
+        const cur = JSON.parse(localStorage.getItem(key)||'[]');
+        cur.push(rv);
+        localStorage.setItem(key, JSON.stringify(cur));
+        alert('Bewertung gespeichert (lokal).');
+        location.href = `./place.html?slug=${data.places.find(p=>p.id===placeId).slug}`;
+      });
+    });
+  </script>
+</body>
+</html>

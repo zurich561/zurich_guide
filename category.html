@@ -1,0 +1,167 @@
+<!-- /category.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Kategorie – Zürich Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Liste mit Filtern, Sortierung und Karte für eine Kategorie in Zürich." />
+  <link rel="canonical" href="./category.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/libs/leaflet/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./city.html?city=zurich">Zürich</a>
+      <a href="./category.html?c=food" aria-current="page">Essen & Trinken</a>
+      <a href="./category.html?c=attractions">Sehenswürdigkeiten</a>
+      <a href="./category.html?c=parks">Parks</a>
+      <a href="./favorites.html">Favoriten</a>
+    </nav>
+    <form id="global-search" class="global-search" role="search">
+      <input id="q" name="q" type="search" placeholder="Suche in Kategorie…" />
+      <button type="submit">Suchen</button>
+      <div id="search-suggest" class="suggest"></div>
+    </form>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Brotkrumen">
+    <a href="./index.html">Start</a> &rsaquo;
+    <a href="./city.html?city=zurich">Zürich</a> &rsaquo;
+    <span id="bc-cat">Kategorie</span>
+  </nav>
+
+  <main class="container">
+    <section class="filters sticky">
+      <form id="filters" class="filters-form">
+        <select name="c" id="filter-cat" aria-label="Kategorie"></select>
+        <select name="price" id="filter-price" aria-label="Preis">
+          <option value="">Preis</option>
+          <option value="€">€</option>
+          <option value="€€">€€</option>
+          <option value="€€€">€€€</option>
+          <option value="€€€€">€€€€</option>
+        </select>
+        <select name="stars" id="filter-stars" aria-label="Sterne">
+          <option value="">Sterne</option>
+          <option value="4">4+</option>
+          <option value="4.5">4.5+</option>
+        </select>
+        <label><input type="checkbox" name="openNow" id="filter-open" /> Jetzt geöffnet</label>
+        <select name="indoorOutdoor" id="filter-io" aria-label="Indoor/Outdoor">
+          <option value="">Indoor/Outdoor</option>
+          <option value="indoor">Indoor</option>
+          <option value="outdoor">Outdoor</option>
+        </select>
+        <input type="text" name="neighborhood" id="filter-neigh" placeholder="Stadtteil" />
+        <input type="text" name="tags" id="filter-tags" placeholder="Tag (z.B. vegan)" />
+        <select name="sort" id="sort" aria-label="Sortierung">
+          <option value="relevance">Relevanz</option>
+          <option value="rating">Bewertung</option>
+          <option value="popularity">Popularität</option>
+          <option value="priceAsc">Preis ↑</option>
+          <option value="priceDesc">Preis ↓</option>
+        </select>
+        <button type="submit" class="btn">Anwenden</button>
+        <a id="to-map" class="btn btn-secondary" href="#">Auf Karte</a>
+      </form>
+    </section>
+
+    <section id="list" class="list"></section>
+
+    <nav id="pagination" class="pagination" aria-label="Seitennavigation"></nav>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide.</p>
+  </footer>
+
+  <script type="module">
+    import { boot, initGlobalSearch, el, starHTML, queryState, setQueryState, applyCategoryState, paginate } from './assets/js/main.js';
+
+    boot().then(({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      initGlobalSearch();
+
+      const params = queryState();
+      const categories = data.categories;
+      const $selCat = document.getElementById('filter-cat');
+      $selCat.innerHTML = categories.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
+      if (params.c) $selCat.value = params.c;
+
+      document.getElementById('bc-cat').textContent = categories.find(c=>c.slug===params.c)?.name || 'Kategorie';
+
+      const renderList = () => {
+        const state = queryState();
+        const { items, total } = applyCategoryState(data, state);
+        const pageSize = 10;
+        const { pageItems, page, pages } = paginate(items, Number(state.page||1), pageSize);
+
+        const $list = document.getElementById('list');
+        $list.innerHTML = '';
+        pageItems.forEach((p, i) => {
+          const card = el('article',{class:'list-row'},
+            el('img',{src:p.images[0], alt:p.name, loading:'lazy', width:220, height:150}),
+            el('div',{class:'list-row-body'},
+              el('h3',{}, el('a',{href:`./place.html?slug=${p.slug}`}, p.name)),
+              el('div',{class:'meta'}, `#${p.ranking} von ${total} · ${starHTML(p.avgRating)} (${p.ratingCount}) · ${p.priceLevel} · ${p.isOpenNow ? 'Jetzt geöffnet' : 'Geschlossen'} · ${p.distanceNote||''}`),
+              el('p',{}, p.short),
+              el('div',{class:'tags'}, p.tags.map(t=>`<span class="tag">${t}</span>`).join(''))
+            ),
+            el('div',{class:'list-row-actions'},
+              el('a',{class:'btn',href:`./place.html?slug=${p.slug}`},'Details'),
+              el('a',{class:'btn btn-secondary',href:`./map.html?c=${state.c}&focus=${p.id}`},'Auf Karte'),
+              el('button',{class:'btn btn-like', 'data-id':p.id, 'aria-pressed': localStorage.getItem('favorites')?.includes(String(p.id))?'true':'false'},'Merken')
+            )
+          );
+          $list.append(card);
+        });
+
+        // pagination
+        const $p = document.getElementById('pagination');
+        $p.innerHTML = '';
+        const mk = (n, lab = n, cur = n===page) => `<a class="page ${cur?'current':''}" href="?${new URLSearchParams({...state,page:n}).toString()}">${lab}</a>`;
+        if (pages>1) {
+          $p.innerHTML = (page>1?mk(page-1,'‹'): '') + Array.from({length:pages},(_,i)=>mk(i+1)).join('') + (page<pages?mk(page+1,'›'):'');
+        }
+
+        // like buttons
+        $list.querySelectorAll('.btn-like').forEach(btn=>{
+          btn.addEventListener('click',()=>{
+            const id = Number(btn.getAttribute('data-id'));
+            const favs = new Set(JSON.parse(localStorage.getItem('favorites')||'[]'));
+            if (favs.has(id)) favs.delete(id); else favs.add(id);
+            localStorage.setItem('favorites', JSON.stringify([...favs]));
+            btn.setAttribute('aria-pressed', favs.has(id)?'true':'false');
+          });
+        });
+      };
+
+      renderList();
+
+      document.getElementById('filters').addEventListener('submit', e=>{
+        e.preventDefault();
+        const form = e.currentTarget;
+        const state = {
+          c: form.c.value,
+          price: form.price.value,
+          stars: form.stars.value,
+          openNow: form.openNow.checked ? '1' : '',
+          indoorOutdoor: form.indoorOutdoor.value,
+          neighborhood: form.neighborhood.value.trim(),
+          tags: form.tags.value.trim(),
+          sort: form.sort.value || 'relevance',
+          page: '1'
+        };
+        setQueryState(state);
+        renderList();
+      });
+
+      document.getElementById('to-map').href = `./map.html?${new URLSearchParams(queryState()).toString()}`;
+    });
+  </script>
+  <script src="./assets/libs/leaflet/leaflet.js"></script>
+</body>
+</html>

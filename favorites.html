@@ -1,0 +1,72 @@
+<!-- /favorites.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Favoriten – Zürich Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Deine gemerkten Orte in Zürich." />
+  <link rel="canonical" href="./favorites.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./favorites.html" aria-current="page">Favoriten</a>
+    </nav>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Brotkrumen">
+    <a href="./index.html">Start</a> &rsaquo; <span>Favoriten</span>
+  </nav>
+
+  <main class="container">
+    <h1>Favoriten</h1>
+    <div id="fav-list" class="list-grid"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide.</p>
+  </footer>
+
+  <script type="module">
+    import { boot, el, starHTML } from './assets/js/main.js';
+    boot().then(({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      const favs = new Set(JSON.parse(localStorage.getItem('favorites')||'[]'));
+      const items = data.places.filter(p=>favs.has(p.id));
+      const $list = document.getElementById('fav-list');
+
+      if (!items.length) $list.append(el('p',{},'Noch keine Favoriten.'));
+
+      items.forEach(p=>{
+        $list.append(
+          el('article',{class:'list-card'},
+            el('img',{src:p.images[0], alt:p.name, loading:'lazy', width:320, height:200}),
+            el('div',{class:'list-card-body'},
+              el('h3',{}, el('a',{href:`./place.html?slug=${p.slug}`}, p.name)),
+              el('div',{class:'meta'}, `${starHTML(p.avgRating)} (${p.ratingCount}) · ${p.priceLevel}`),
+              el('p',{}, p.short),
+              el('div',{class:'actions'},
+                el('a',{class:'btn',href:`./place.html?slug=${p.slug}`},'Details'),
+                el('button',{class:'btn btn-like','data-id':p.id,'aria-pressed':'true'},'Entfernen')
+              )
+            )
+          )
+        );
+      });
+
+      $list.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.btn-like'); if(!btn) return;
+        const id = Number(btn.getAttribute('data-id'));
+        const set = new Set(JSON.parse(localStorage.getItem('favorites')||'[]'));
+        set.delete(id);
+        localStorage.setItem('favorites', JSON.stringify([...set]));
+        btn.closest('article').remove();
+        if (!$list.children.length) $list.append(el('p',{},'Noch keine Favoriten.'));
+      });
+    });
+  </script>
+</body>
+</html>

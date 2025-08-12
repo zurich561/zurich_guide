@@ -1,0 +1,78 @@
+<!-- /map.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Karte – Zürich Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Kartenansicht der Orte in einer Kategorie mit Popups und Links." />
+  <link rel="canonical" href="./map.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/libs/leaflet/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./city.html?city=zurich">Zürich</a>
+      <a href="./favorites.html">Favoriten</a>
+    </nav>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Brotkrumen">
+    <a href="./index.html">Start</a> &rsaquo; <span>Karte</span>
+  </nav>
+
+  <main class="container">
+    <section class="split">
+      <div class="split-left">
+        <div id="list" class="list"></div>
+      </div>
+      <div class="split-right">
+        <div id="map" class="map tall"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide.</p>
+  </footer>
+
+  <script type="module">
+    import { boot, el, starHTML, applyCategoryState, queryState } from './assets/js/main.js';
+    import { initMap, addPlacesToMap, fitToPlaces, focusPlace } from './assets/js/map.js';
+    boot().then(({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      const state = queryState();
+      const { items } = applyCategoryState(data, state);
+      const $list = document.getElementById('list');
+
+      items.forEach(p=>{
+        $list.append(
+          el('article',{class:'list-row'},
+            el('img',{src:p.images[0], alt:p.name, loading:'lazy', width:220, height:150}),
+            el('div',{class:'list-row-body'},
+              el('h3',{}, el('a',{href:`./place.html?slug=${p.slug}`}, p.name)),
+              el('div',{class:'meta'}, `${starHTML(p.avgRating)} (${p.ratingCount}) · ${p.priceLevel}`)
+            ),
+            el('div',{class:'list-row-actions'},
+              el('a',{class:'btn',href:`./place.html?slug=${p.slug}`},'Details')
+            )
+          )
+        );
+      });
+
+      const city = data.cities[0];
+      const map = initMap('map', city.coords);
+      addPlacesToMap(map, items, { linkTo: 'place' });
+      if (state.focus) {
+        const focus = data.places.find(p=>String(p.id)===String(state.focus));
+        if (focus) focusPlace(map, focus, { zoom: 17 });
+      } else {
+        fitToPlaces(map, items);
+      }
+    });
+  </script>
+  <script src="./assets/libs/leaflet/leaflet.js"></script>
+</body>
+</html>

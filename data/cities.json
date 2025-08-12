@@ -1,0 +1,11 @@
+
+[
+  {
+    "id": 1,
+    "name": "Zürich",
+    "slug": "zurich",
+    "coords": { "lat": 47.3769, "lng": 8.5417 },
+    "heroImage": "./assets/img/city/zurich-hero.jpg",
+    "intro": "Zürich kombiniert historische Altstadt, lebendige Quartiere, See und Uetliberg. Perfekt für Kulinarik, Kultur und Natur."
+  }
+]

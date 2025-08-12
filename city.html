@@ -1,0 +1,96 @@
+<!-- /city.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Zürich – Überblick, Karte, Top-Orte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Zürich Überblick: Karte, Viertel, Top-Orte, Tipps. Tripadvisor-ähnliche Übersicht." />
+  <link rel="canonical" href="./city.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/libs/leaflet/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./city.html?city=zurich" aria-current="page">Zürich</a>
+      <a href="./category.html?c=food">Essen & Trinken</a>
+      <a href="./category.html?c=attractions">Sehenswürdigkeiten</a>
+      <a href="./category.html?c=parks">Parks</a>
+      <a href="./favorites.html">Favoriten</a>
+    </nav>
+    <form id="global-search" class="global-search" role="search">
+      <input id="q" name="q" type="search" placeholder="Suche in Zürich…" />
+      <button type="submit">Suchen</button>
+      <div id="search-suggest" class="suggest"></div>
+    </form>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Brotkrumen">
+    <a href="./index.html">Start</a> &rsaquo; <span>Zürich</span>
+  </nav>
+
+  <main class="container">
+    <article id="city-article" class="city-article"></article>
+
+    <section class="split">
+      <div class="split-left">
+        <h2>Top-Orte</h2>
+        <div id="city-top" class="list-grid"></div>
+      </div>
+      <div class="split-right">
+        <div id="map" class="map"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide.</p>
+  </footer>
+
+  <script type="module">
+    import { boot, initGlobalSearch, el, starHTML } from './assets/js/main.js';
+    import { initMap, addPlacesToMap, fitToPlaces } from './assets/js/map.js';
+
+    boot().then(async ({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      initGlobalSearch();
+
+      const city = data.cities.find(c => c.slug === (new URLSearchParams(location.search).get('city') || 'zurich')) || data.cities[0];
+      const top = [...data.places].filter(p => p.cityId === city.id).sort((a,b)=> (b.avgRating??0) - (a.avgRating??0)).slice(0,8);
+
+      const $article = document.getElementById('city-article');
+      $article.append(
+        el('div',{class:'city-hero'},
+          el('img',{src: city.heroImage, alt: city.name, loading:'lazy'})
+        ),
+        el('h1',{}, city.name),
+        el('p',{}, city.intro)
+      );
+
+      const $grid = document.getElementById('city-top');
+      top.forEach(p=>{
+        const card = el('article',{class:'list-card'},
+          el('img',{src:p.images[0], alt:p.name, loading:'lazy', width:320, height:200}),
+          el('div',{class:'list-card-body'},
+            el('h3',{}, el('a',{href:`./place.html?slug=${p.slug}`}, p.name)),
+            el('div',{class:'meta'}, `#${p.ranking} in Zürich · ${starHTML(p.avgRating)} (${p.ratingCount}) · ${p.priceLevel}`),
+            el('p',{}, p.short),
+            el('div',{class:'actions'},
+              el('a',{class:'btn',href:`./place.html?slug=${p.slug}`},'Details'),
+              el('a',{class:'btn btn-secondary',href:`./map.html?c=${p.categorySlug || ''}&focus=${p.id}`},'Auf Karte')
+            )
+          )
+        );
+        $grid.append(card);
+      });
+
+      const map = initMap('map', city.coords);
+      addPlacesToMap(map, top, { linkTo: 'place' });
+      fitToPlaces(map, top);
+    });
+  </script>
+  <script src="./assets/libs/leaflet/leaflet.js"></script>
+</body>
+</html>

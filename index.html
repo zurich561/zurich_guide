@@ -1,0 +1,70 @@
+<!-- /index.html -->
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Zürich Guide – Finde Highlights, Essen & Erleben</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Tripadvisor-ähnlicher Stadtführer für Zürich: Highlights, Essen & Trinken, Sehenswürdigkeiten, Parks – mit Karten, Bewertungen und Favoriten." />
+  <link rel="canonical" href="./index.html" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/libs/leaflet/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="./index.html">Zürich Guide</a>
+    <nav class="top-nav">
+      <a href="./city.html?city=zurich">Zürich</a>
+      <a href="./category.html?c=food">Essen & Trinken</a>
+      <a href="./category.html?c=attractions">Sehenswürdigkeiten</a>
+      <a href="./category.html?c=parks">Parks</a>
+      <a href="./favorites.html" aria-label="Favoriten">Favoriten</a>
+    </nav>
+    <form id="global-search" class="global-search" role="search" autocomplete="off">
+      <input id="q" name="q" type="search" placeholder="Suche: Ort, Kategorie, Tags, Stadtteil…" aria-label="Suche" />
+      <button type="submit">Suchen</button>
+      <div id="search-suggest" class="suggest"></div>
+    </form>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <img src="./assets/img/city/zurich-hero.jpg" alt="Zürich Panorama" loading="eager" />
+      <div class="hero-text">
+        <h1>Entdecke Zürich</h1>
+        <p>Dein kompakter City-Guide im Tripadvisor-Stil.</p>
+        <div class="hero-cta">
+          <a class="btn" href="./city.html?city=zurich">Zur Stadtübersicht</a>
+          <a class="btn btn-secondary" href="./category.html?c=attractions">Top-Sehenswürdigkeiten</a>
+        </div> 
+      </div>
+    </section>
+
+    <section class="home-cats">
+      <h2>Kategorien</h2>
+      <div id="home-categories" class="cards-grid"></div>
+    </section>
+
+    <section class="home-highlights">
+      <h2>Highlights</h2>
+      <div id="home-highlights" class="list-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="y"></span> Zürich Guide. Daten: OpenStreetMap, Open Data. Karten &copy; OSM-Mitwirkende.</p>
+  </footer>
+
+  <script type="module">
+    import { boot, renderCategoryCards, renderHighlightList, initGlobalSearch } from './assets/js/main.js';
+    boot().then(async ({ data }) => {
+      document.getElementById('y').textContent = new Date().getFullYear();
+      renderCategoryCards(document.getElementById('home-categories'), data.categories);
+      // Highlights: top ranked across categories
+      const top = [...data.places].sort((a,b) => (b.avgRating ?? 0) - (a.avgRating ?? 0)).slice(0,6);
+      renderHighlightList(document.getElementById('home-highlights'), top);
+      initGlobalSearch();
+    });
+  </script>
+</body>
+</html>

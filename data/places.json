@@ -1,0 +1,397 @@
+
+[
+  {
+    "id": 101,
+    "slug": "zeughauskeller",
+    "name": "Zeughauskeller",
+    "cityId": 1,
+    "categoryId": 1,
+    "short": "Traditionelles Schweizer Restaurant an der Bahnhofstrasse.",
+    "description": "Klassiker wie Zürcher Geschnetzeltes, Bratwurst und Rösti in historischem Ambiente.",
+    "distanceNote": "Zentrum",
+    "neighborhood": "Altstadt",
+    "indoorOutdoor": "indoor",
+    "address": "Bahnhofstrasse 28a, 8001 Zürich",
+    "coords": { "lat": 47.37072, "lng": 8.53905 },
+    "tags": ["schweizer küche","rösti","geschnetzeltes","traditionell"],
+    "priceLevel": "€€",
+    "isOpenNow": true,
+    "ranking": 1,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/food/zeughauskeller-1.jpg",
+      "./assets/img/food/zeughauskeller-2.jpg"
+    ],
+    "website": "https://www.zeughauskeller.ch",
+    "phone": "+41 44 220 15 15",
+    "openingHours": {
+      "mon": "11:00-23:00","tue": "11:00-23:00","wed": "11:00-23:00",
+      "thu": "11:00-23:00","fri": "11:00-23:00","sat": "11:00-23:00","sun": "11:00-22:00"
+    },
+    "nearbyIds": [102, 201]
+  },
+  {
+    "id": 102,
+    "slug": "hiltl",
+    "name": "Hiltl",
+    "cityId": 1,
+    "categoryId": 1,
+    "short": "Das älteste vegetarische Restaurant der Welt.",
+    "description": "Großes Buffet und À-la-carte mit internationalen vegetarischen und veganen Gerichten.",
+    "distanceNote": "Nähe Bahnhofstrasse",
+    "neighborhood": "City",
+    "indoorOutdoor": "indoor",
+    "address": "Sihlstrasse 28, 8001 Zürich",
+    "coords": { "lat": 47.37354, "lng": 8.53668 },
+    "tags": ["vegetarisch","vegan","buffet","healthy"],
+    "priceLevel": "€€",
+    "isOpenNow": true,
+    "ranking": 2,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/food/hiltl-1.jpg"
+    ],
+    "website": "https://hiltl.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "08:00-23:00","tue": "08:00-23:00","wed": "08:00-23:00",
+      "thu": "08:00-23:00","fri": "08:00-00:00","sat": "09:00-00:00","sun": "09:00-23:00"
+    },
+    "nearbyIds": [101, 103]
+  },
+  {
+    "id": 103,
+    "slug": "frau-gerolds-garten",
+    "name": "Frau Gerolds Garten",
+    "cityId": 1,
+    "categoryId": 1,
+    "short": "Urbaner Garten mit Bars und Streetfood in Zürich-West.",
+    "description": "Entspannte Stimmung, saisonale Küche, Terrasse mit Blick auf das Viadukt.",
+    "distanceNote": "Zürich-West",
+    "neighborhood": "Kreis 5",
+    "indoorOutdoor": "outdoor",
+    "address": "Geroldstrasse 23, 8005 Zürich",
+    "coords": { "lat": 47.36667, "lng": 8.51777 },
+    "tags": ["streetfood","bar","terrasse","hip"],
+    "priceLevel": "€€",
+    "isOpenNow": false,
+    "ranking": 5,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/food/frau-gerolds-1.jpg"
+    ],
+    "website": "https://www.fraugerold.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "11:00-23:00","tue": "11:00-23:00","wed": "11:00-23:00",
+      "thu": "11:00-23:00","fri": "11:00-00:00","sat": "11:00-00:00","sun": "11:00-22:00"
+    },
+    "nearbyIds": [202, 301]
+  },
+
+  {
+    "id": 201,
+    "slug": "grossmuenster",
+    "name": "Grossmünster",
+    "cityId": 1,
+    "categoryId": 2,
+    "short": "Romanische Kirche mit markanten Doppeltürmen.",
+    "description": "Wahrzeichen von Zürich. Turmbesteigung mit Blick über die Stadt.",
+    "distanceNote": "Altstadt",
+    "neighborhood": "Niederdorf",
+    "indoorOutdoor": "indoor",
+    "address": "Grossmünsterplatz, 8001 Zürich",
+    "coords": { "lat": 47.37091, "lng": 8.54402 },
+    "tags": ["kirche","aussicht","geschichte"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 1,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/attractions/grossmuenster-1.jpg"
+    ],
+    "website": "https://www.grossmuenster.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "10:00-18:00","tue": "10:00-18:00","wed": "10:00-18:00",
+      "thu": "10:00-18:00","fri": "10:00-18:00","sat": "10:00-18:00","sun": "12:00-18:00"
+    },
+    "nearbyIds": [101, 202]
+  },
+  {
+    "id": 202,
+    "slug": "bahnhofstrasse",
+    "name": "Bahnhofstrasse",
+    "cityId": 1,
+    "categoryId": 2,
+    "short": "Zürichs berühmte Einkaufsstraße.",
+    "description": "Luxus-Boutiquen, Kaufhäuser und Cafés – ideal zum Flanieren.",
+    "distanceNote": "City",
+    "neighborhood": "City",
+    "indoorOutdoor": "outdoor",
+    "address": "Bahnhofstrasse, 8001 Zürich",
+    "coords": { "lat": 47.3723, "lng": 8.5385 },
+    "tags": ["shopping","flanieren"],
+    "priceLevel": "€€€",
+    "isOpenNow": true,
+    "ranking": 3,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/attractions/bahnhofstrasse-1.jpg"
+    ],
+    "website": "https://www.zuerich.com",
+    "phone": "",
+    "openingHours": {
+      "mon": "09:00-20:00","tue": "09:00-20:00","wed": "09:00-20:00",
+      "thu": "09:00-21:00","fri": "09:00-20:00","sat": "09:00-18:00","sun": "closed"
+    },
+    "nearbyIds": [101, 102, 201]
+  },
+  {
+    "id": 203,
+    "slug": "uetliberg",
+    "name": "Uetliberg",
+    "cityId": 1,
+    "categoryId": 2,
+    "short": "Hausberg mit Panoramablick über Stadt und See.",
+    "description": "Beliebtes Ausflugsziel zum Wandern, Biken und Sonnenuntergänge genießen.",
+    "distanceNote": "Südwest",
+    "neighborhood": "Uetliberg",
+    "indoorOutdoor": "outdoor",
+    "address": "Uetliberg, 8143 Uetliberg",
+    "coords": { "lat": 47.3499, "lng": 8.4911 },
+    "tags": ["aussicht","wandern","sonnenuntergang"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 2,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/attractions/uetliberg-1.jpg"
+    ],
+    "website": "https://www.uetliberg.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "00:00-23:59","tue": "00:00-23:59","wed": "00:00-23:59",
+      "thu": "00:00-23:59","fri": "00:00-23:59","sat": "00:00-23:59","sun": "00:00-23:59"
+    },
+    "nearbyIds": [301]
+  },
+
+  {
+    "id": 301,
+    "slug": "zuerichhorn",
+    "name": "Zürichhorn Park",
+    "cityId": 1,
+    "categoryId": 3,
+    "short": "Grüner Park direkt am Zürichsee.",
+    "description": "Spazierwege, Liegewiesen, Pétanque, Kunst im öffentlichen Raum.",
+    "distanceNote": "Seefeld",
+    "neighborhood": "Seefeld",
+    "indoorOutdoor": "outdoor",
+    "address": "Bellerivestrasse 138, 8008 Zürich",
+    "coords": { "lat": 47.3579, "lng": 8.5531 },
+    "tags": ["see","spazieren","familie","picknick"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 1,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/parks/zuerichhorn-1.jpg"
+    ],
+    "website": "https://www.stadt-zuerich.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "06:00-22:00","tue": "06:00-22:00","wed": "06:00-22:00",
+      "thu": "06:00-22:00","fri": "06:00-22:00","sat": "06:00-22:00","sun": "06:00-22:00"
+    },
+    "nearbyIds": [202]
+  },
+  {
+    "id": 302,
+    "slug": "chinagarten",
+    "name": "Chinagarten Zürich",
+    "cityId": 1,
+    "categoryId": 3,
+    "short": "Chinesischer Garten am Seeufer.",
+    "description": "Geschenk der Partnerstadt Kunming. Detailreiche Architektur und Ruheoase.",
+    "distanceNote": "Seefeld",
+    "neighborhood": "Seefeld",
+    "indoorOutdoor": "outdoor",
+    "address": "Bellerivestrasse 138, 8008 Zürich",
+    "coords": { "lat": 47.3572, "lng": 8.5542 },
+    "tags": ["garten","architektur","ruhe"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 3,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/parks/chinagarten-1.jpg"
+    ],
+    "website": "https://www.stadt-zuerich.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "11:00-19:00","tue": "11:00-19:00","wed": "11:00-19:00",
+      "thu": "11:00-19:00","fri": "11:00-19:00","sat": "11:00-19:00","sun": "11:00-19:00"
+    },
+    "nearbyIds": [301]
+  },
+  {
+    "id": 303,
+    "slug": "platzspitz",
+    "name": "Platzspitz Park",
+    "cityId": 1,
+    "categoryId": 3,
+    "short": "Historischer Park beim Landesmuseum.",
+    "description": "Zwischen Sihl und Limmat, ideal für Spaziergänge und Erholung.",
+    "distanceNote": "HB",
+    "neighborhood": "City",
+    "indoorOutdoor": "outdoor",
+    "address": "Museumstrasse 2, 8001 Zürich",
+    "coords": { "lat": 47.3797, "lng": 8.5409 },
+    "tags": ["park","spazieren","familie"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 4,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/parks/platzspitz-1.jpg"
+    ],
+    "website": "https://www.stadt-zuerich.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "06:00-22:00","tue": "06:00-22:00","wed": "06:00-22:00",
+      "thu": "06:00-22:00","fri": "06:00-22:00","sat": "06:00-22:00","sun": "06:00-22:00"
+    },
+    "nearbyIds": [202, 102]
+  },
+
+  {
+    "id": 104,
+    "slug": "sternengrill",
+    "name": "Sternen Grill",
+    "cityId": 1,
+    "categoryId": 1,
+    "short": "Legendäre Bratwurst und Bürli am Bellevue.",
+    "description": "Unkompliziert, schnell, kultig – perfekter Snack nahe See.",
+    "distanceNote": "Bellevue",
+    "neighborhood": "Seefeld",
+    "indoorOutdoor": "outdoor",
+    "address": "Theaterstrasse 22, 8001 Zürich",
+    "coords": { "lat": 47.3661, "lng": 8.5456 },
+    "tags": ["bratwurst","schnell","kult"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 3,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/food/sternengrill-1.jpg"
+    ],
+    "website": "https://www.sternengrill.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "10:30-23:00","tue": "10:30-23:00","wed": "10:30-23:00",
+      "thu": "10:30-23:00","fri": "10:30-00:00","sat": "10:30-00:00","sun": "10:30-22:00"
+    },
+    "nearbyIds": [201, 301]
+  },
+  {
+    "id": 204,
+    "slug": "landesmuseum",
+    "name": "Landesmuseum Zürich",
+    "cityId": 1,
+    "categoryId": 2,
+    "short": "Größte kulturhistorische Sammlung der Schweiz.",
+    "description": "Architektur-Mix aus Historismus und Moderne. Spannende Dauer- und Wechselausstellungen.",
+    "distanceNote": "HB",
+    "neighborhood": "City",
+    "indoorOutdoor": "indoor",
+    "address": "Museumstrasse 2, 8001 Zürich",
+    "coords": { "lat": 47.3793, "lng": 8.5392 },
+    "tags": ["museum","geschichte","kultur"],
+    "priceLevel": "€€",
+    "isOpenNow": true,
+    "ranking": 4,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/attractions/landesmuseum-1.jpg"
+    ],
+    "website": "https://www.landesmuseum.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "closed","tue": "10:00-17:00","wed": "10:00-17:00",
+      "thu": "10:00-19:00","fri": "10:00-17:00","sat": "10:00-17:00","sun": "10:00-17:00"
+    },
+    "nearbyIds": [303, 202]
+  },
+  {
+    "id": 105,
+    "slug": "la-salle-restaurant",
+    "name": "La Salle Restaurant",
+    "cityId": 1,
+    "categoryId": 1,
+    "short": "Feines Essen im Industrie-Ambiente des Schiffbaus.",
+    "description": "Mediterrane Küche, hohe Glasfassaden, elegantes Setting.",
+    "distanceNote": "Schiffbau",
+    "neighborhood": "Kreis 5",
+    "indoorOutdoor": "indoor",
+    "address": "Schiffbaustrasse 4, 8005 Zürich",
+    "coords": { "lat": 47.3883, "lng": 8.5170 },
+    "tags": ["mediterran","fine dining","schiffbau"],
+    "priceLevel": "€€€",
+    "isOpenNow": false,
+    "ranking": 6,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/food/la-salle-1.jpg"
+    ],
+    "website": "https://www.lasalle-restaurant.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "closed","tue": "11:30-23:00","wed": "11:30-23:00",
+      "thu": "11:30-23:00","fri": "11:30-23:00","sat": "17:00-23:00","sun": "closed"
+    },
+    "nearbyIds": [103, 202]
+  },
+  {
+    "id": 304,
+    "slug": "hoenggerberg",
+    "name": "Hönggerberg Wald",
+    "cityId": 1,
+    "categoryId": 3,
+    "short": "Grünes Naherholungsgebiet mit Trails.",
+    "description": "Waldwege, Aussicht auf Stadt und Limmat, ideal zum Joggen.",
+    "distanceNote": "Nordwest",
+    "neighborhood": "Höngg",
+    "indoorOutdoor": "outdoor",
+    "address": "Hönggerberg, 8049 Zürich",
+    "coords": { "lat": 47.4086, "lng": 8.4944 },
+    "tags": ["wald","joggen","trail"],
+    "priceLevel": "€",
+    "isOpenNow": true,
+    "ranking": 5,
+    "avgRating": 0,
+    "ratingCount": 0,
+    "images": [
+      "./assets/img/parks/hoenggerberg-1.jpg"
+    ],
+    "website": "https://www.stadt-zuerich.ch",
+    "phone": "",
+    "openingHours": {
+      "mon": "06:00-22:00","tue": "06:00-22:00","wed": "06:00-22:00",
+      "thu": "06:00-22:00","fri": "06:00-22:00","sat": "06:00-22:00","sun": "06:00-22:00"
+    },
+    "nearbyIds": [203]
+  }
+]
